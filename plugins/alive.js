@@ -25,7 +25,7 @@ message:{
   newsletterAdminInviteMessage: { 
     newsletterJid: '120363402051068395@newsletter', 
     newsletterName: "RANU MD", 
-    caption: RANU MD + ` Verified By ` + MR RANDUL, 
+    caption: `RANU MD` + ` Verified By ` + `MR RANDUL`, 
     inviteExpiration: 0
   }
  }

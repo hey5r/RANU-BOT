@@ -29,7 +29,7 @@ message:{
     inviteExpiration: 0
   }
  }
- }, { quoted: Supunwa });
+ }, { quoted: Supunwa };
     
 }catch(e){
 console.log(e)

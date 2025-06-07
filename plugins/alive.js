@@ -11,12 +11,12 @@ cmd({
 },
 async(robin, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{              
-return await robin.sendMessage(from,{image: {url: config.ALIVE_IMG},caption: config.ALIVE_MSG},{quoted: Supunwa})
+return await robin.sendMessage(from,{image: {url: config.ALIVE_IMG},caption: config.ALIVE_MSG},{quoted: mek})
     
     
  const botname = "RANU-MD"; 
  const ownername = "MR RANDUL"; 
- const Supunwa = { 
+ const mek = { 
  key: { 
   remoteJid: 'status@broadcast', 
   participant: '0@s.whatsapp.net' 

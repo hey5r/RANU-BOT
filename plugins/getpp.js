@@ -1,4 +1,4 @@
-const {cmd , commands} = require('../command');
+const { cmd } = require('../command');
 
 cmd({
     pattern: "getpp",
@@ -7,47 +7,39 @@ cmd({
     category: "owner",
     use: ".getpp <phone number>",
     filename: __filename
-},
-async (conn, mek, m, { from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (conn, mek, m, {
+    from, reply, args, isOwner
+}) => {
     try {
-        // Check if the user is the bot owner
         if (!isOwner) return reply("🛑 This command is only for the bot owner!");
+        if (!args[0]) return reply("📞 Please provide a phone number (e.g., .getpp 94712345678)");
 
-        // Check if a phone number is provided
-        if (!args[0]) return reply("🔥 Please provide a phone number (e.g., .getpp 1234567890)");
+        const number = args[0].replace(/[^0-9]/g, "");
+        const targetJid = number + "@s.whatsapp.net";
 
-        // Format the phone number to JID
-        let targetJid = args[0].replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+        // Validate if number exists on WhatsApp
+        const [exists] = await conn.onWhatsApp(targetJid);
+        if (!exists?.exists) return reply("🚫 This number is not on WhatsApp.");
 
-        // Get the profile picture URL
+        // Try fetching profile picture
         let ppUrl;
         try {
             ppUrl = await conn.profilePictureUrl(targetJid, "image");
-        } catch (e) {
-            return reply("🖼️ This user has no profile picture or it cannot be accessed!");
-        }
-
-        // Get the user's name or number for the caption
-        let userName = targetJid.split("@")[0]; // Default to phone number
-        try {
-            const contact = await conn.getContact(targetJid);
-            userName = contact.notify || contact.vname || userName;
         } catch {
-            // Fallback to phone number if contact info is unavailable
+            return reply("🛑 Cannot access this user's profile photo. They may have privacy settings preventing it.");
         }
 
-        // Send the profile picture
-        await conn.sendMessage(from, { 
-            image: { url: ppUrl }, 
-            caption: `📌 Profile picture of ${userName}` 
+        const displayName = exists.notify || number;
+
+        await conn.sendMessage(from, {
+            image: { url: ppUrl },
+            caption: `🖼️ Profile picture of ${displayName}`
         });
 
-        // Send a reaction to the command message
         await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
-    } catch (e) {
-        // Reply with a generic error message and log the error
-        reply("🛑 An error occurred while fetching the profile picture! Please try again later.");
-        l(e); // Log the error for debugging
+    } catch (err) {
+        console.error("Error in getpp:", err);
+        reply("⚠️ An unexpected error occurred. Please try again.");
     }
 });

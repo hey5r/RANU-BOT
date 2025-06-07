@@ -10,16 +10,29 @@ cmd({
     filename: __filename
 },
 async(robin, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-try{
-    await robin.sendPresenceUpdate('recording', from);
-    await robin.sendMessage(from, { audio: { url: "https://github.com/rikkqa43/Bot-help/raw/refs/heads/main/synthesize.mp3" }, mimetype: 'audio/mpeg', ptt: true }, { quoted: mek });
-    await robin.sendMessage(from,{sticker: { url : "https://github.com/rikkqa43/Bot-help/raw/refs/heads/main/STK-20231121-WA0000.webp" },package: 'S_I_H_I_L_E_L'},{ quoted: mek })   
-                 
+try{              
 return await robin.sendMessage(from,{image: {url: config.ALIVE_IMG},caption: config.ALIVE_MSG},{quoted: mek})
+    
+    
+ const botname = "RANU-MD"; 
+ const ownername = "MR RANDUL"; 
+ const Supunwa = { 
+ key: { 
+  remoteJid: 'status@broadcast', 
+  participant: '0@s.whatsapp.net' 
+   }, 
+message:{ 
+  newsletterAdminInviteMessage: { 
+    newsletterJid: '120363402051068395@newsletter', 
+    newsletterName: "RANU MD", 
+    caption: RANU MD + ` Verified By ` + MR RANDUL, 
+    inviteExpiration: 0
+  }
+ }
+ }, { quoted: Supunwa });
     
 }catch(e){
 console.log(e)
 reply(`${e}`)
 }
 })
-

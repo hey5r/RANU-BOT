@@ -9,7 +9,7 @@
     "restart": "pm2 restart 'RANU-MD'"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.18",
+    "@whiskeysockets/baileys": "npm:baileys-mod",
     "@dark-yasiya/yt-dl.js": "1.0.5",
     "@dark-yasiya/scrap": "1.0.1",
     "pino": "^9.7.0",
